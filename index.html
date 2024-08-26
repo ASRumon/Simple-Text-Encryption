@@ -1,0 +1,233 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>/* Apply a gradient background with animation */
+    body{background-color: #160909;}
+        .encryptor {
+            background: linear-gradient(45deg, rgba(255, 0, 150, 0.3), rgba(0, 204, 255, 0.3));
+            background-size: 200% 200%;
+            animation: gradientAnimation 6s ease infinite;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            z-index: 999;
+        }
+        
+        /* Create the gradient animation effect */
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+        
+        /* Style the headings and labels */
+        .encryptor h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #ffffff;
+        }
+        
+        .encryptor label {
+            font-size: 16px;
+            margin-bottom: 5px;
+            display: block;
+            color: #ffffff;
+        }
+        
+        /* Style the textareas and input */
+        .encryptor textarea,
+        .encryptor input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Style the buttons */
+        .encryptor button {
+            background: linear-gradient(45deg, #ec1c1c, #755252);
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+        
+        /* Button hover effect */
+        .encryptor button:hover {
+            background: linear-gradient(45deg, #860808, #f7987b);
+        }
+        
+        /* Readonly textarea style */
+        .encryptor textarea[readonly] {
+            background-color: #f1f1f1;
+            color: #333;
+            cursor: not-allowed;
+        }
+        /* Bubble effect container */
+.bubble-container {
+    position: relative;
+}
+
+.bubble {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    animation: bubbleAnimation 2s ease-out forwards;
+    pointer-events: none; /* To ensure the bubbles don't interfere with text input */
+}
+
+/* Bubble animation */
+@keyframes bubbleAnimation {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px) scale(1.5);
+    }
+}
+
+/* Style the textareas and input */
+.encryptor textarea,
+.encryptor input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+    position: relative;
+    z-index: 1;
+}
+
+/* Adjusted for bubble container */
+.encryptor textarea.bubble-container,
+.encryptor input[type="password"].bubble-container {
+    padding-right: 10px;
+}
+/* Style the copy result button */
+#copyResultBtn {
+    background: linear-gradient(45deg, #003d00, #000e00);
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+    margin-top: 10px;
+}
+
+/* Button hover effect */
+#copyResultBtn:hover {
+    color: #000000;
+    background: linear-gradient(45deg, #4bff4b, #79f77b);
+}
+
+
+        </style>
+</head>
+<body>
+
+<style>/* Base styling for input and textarea fields */
+    textarea, input {
+        width: calc(100% - 20px);
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        font-size: 16px;
+        outline: none;
+        position: relative;
+        overflow: hidden; /* Ensure splash is contained within the input */
+    }
+    
+   
+    </style>
+    <div class="encryptor">
+        <h2>Password-based AES Encryptor/Decryptor</h2>
+        <label for="plaintext">Enter text to encrypt or decrypt:</label>
+        <div class="bubble-container">
+            <textarea id="plaintext"></textarea>
+        </div><br><br>
+    
+        <label for="password">Enter password:</label>
+        <div class="bubble-container">
+            <input type="password" id="password">
+        </div><br><br>
+    
+        <button id="encryptBtn">Encrypt</button>
+        <button id="decryptBtn">Decrypt</button><br><br>
+    
+        <label for="result">Result:</label>
+        <div class="bubble-container">
+            <textarea id="result" readonly></textarea>
+        </div><br><br>
+        
+        <!-- Copy Result Button -->
+        <button id="copyResultBtn">Copy Result</button>
+    </div>
+    
+    
+</body>
+
+
+
+
+
+
+
+<script src="crypto-js.min.js"></script>
+<script src="encription.js"></script>
+
+<script>// Copy the result to clipboard
+    document.getElementById('copyResultBtn').addEventListener('click', function() {
+        const resultTextarea = document.getElementById('result');
+        resultTextarea.select();
+        document.execCommand('copy');
+    
+        // Optional: Show a temporary confirmation message
+        this.textContent = 'Copied!';
+        setTimeout(() => {
+            this.textContent = 'Copy Result';
+        }, 2000);
+    });
+    </script>
+
+
+
+
+
+
+</html>
